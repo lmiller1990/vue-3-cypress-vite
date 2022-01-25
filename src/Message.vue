@@ -1,9 +1,13 @@
 <template>
-  <div>Hello, {{ msg }}</div>
+  <button @click="submit">Button</button>
 </template>
 
 <script>
 export default {
-  inject: ['msg']
+  methods: {
+    submit () {
+      this.$emit('register-success', { foo: 'bar' })
+    }
+  }
 }
 </script>

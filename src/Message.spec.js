@@ -2,13 +2,19 @@ import { mount } from '@cypress/vue'
 import Message from './Message.vue'
 
 it('works', () => {
+  const stub = cy.stub()
+  const onRegisterSuccess = (...args) => {
+    console.log('Called with', ...args)
+    stub(...args)
+  }
+
   mount(Message, {
-    global: {
-      provide: {
-        msg: 'world!'
-      }
+    props: {
+      onRegisterSuccess
     }
   })
 
-  cy.get('div').contains('Hello, world!')
+  cy.get('button').click().then(() => {
+    expect(stub).to.have.been.calledWith({ foo: 'bar' })
+  })
 })
